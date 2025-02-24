@@ -1,0 +1,5 @@
+geopandas==0.14.3
+OWSLib==0.32.1
+psycopg2==2.9.9
+python-dotenv==1.0.1
+Shapely==2.0.7
