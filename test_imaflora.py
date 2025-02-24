@@ -18,7 +18,9 @@ import os
 import sys
 import logging
 
-os.chdir(r'C:\Projetos\imaflora')
+script_path = os.path.dirname(os.path.abspath(__file__))
+
+os.chdir(script_path)
 
 class DownloadEmbargoIbama:
     def __init__(self, start, end, uf):
