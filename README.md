@@ -54,12 +54,13 @@ Tool created to download any geographic dataset available in TerraBrasilis Web F
 ```
 $ cd teste_imaflora
 $ python run_etl_terrabrasilis.py <"workspace"> <"layer"> <"ano_inicio"> <"ano_fim">
-```
 
 "workspace": workspace name
 "layer": layer name
 "ano_inicio" : filter results greater or equal to a given year
 "ano_fim" : filter results older or equal to a given year
+
+```
 
 If the code receives a non-existent workspace or workspace/layer, it will return a error message.
 If the dataset has a `year` column, the start and end years area mandatory input as well. Otherwise, it is not required.
