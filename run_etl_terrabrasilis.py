@@ -19,22 +19,20 @@ from sqlalchemy import create_engine
 script_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_path)
 
-
 from etl_terrabrasilis_class import EtlTerraBrasilis
 
 if __name__ == '__main__':
     
     # Set up logging
-    now = datetime.datetime.now().strftime("%I.%M%p_%B_%d_%Y")
+    now = datetime.datetime.now().strftime("%H%M%S-%m.%d.%Y")
     logging.basicConfig(
-        filename=f"etl_terrabrasilis_{now}.log",
+        filename=f"log//etl_terrabrasilis_{now}.log",
         filemode='a',
         format='%(asctime)s\t%(levelname)s\t%(message)s',
         level=logging.INFO
     )
     logger = logging.getLogger()  # Get the root logger
     
-    # Initialize the class with the logger
     t = EtlTerraBrasilis(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], logger)
     
     logger.info('Initializing process...')
@@ -66,9 +64,9 @@ if __name__ == '__main__':
     # Connect to the PostgreSQL database
     conn = psycopg2.connect(**db_params)
     cur = conn.cursor()
-    db_url = f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PASSWORD')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('DATABASE')}"
-
+    
     # Create a SQLAlchemy engine
+    db_url = f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PASSWORD')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('DATABASE')}"
     engine = create_engine(db_url)
     
     table_name = f"{sys.argv[1]}_{sys.argv[2]}".replace("-", "_")
