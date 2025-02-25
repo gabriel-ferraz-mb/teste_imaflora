@@ -35,7 +35,7 @@ if __name__ == '__main__':
         format='%(asctime)s\t%(levelname)s\t%(message)s',
         level=logging.INFO
     )
-    logger = logging.getLogger()  # Get the root logger
+    logger = logging.getLogger() 
     
     t = EtlTerraBrasilis(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], logger)
     
