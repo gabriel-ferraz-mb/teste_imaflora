@@ -1,7 +1,7 @@
 # Gabriel Ferraz - Imaflora
 ---
 
-Script to download Data from TerraBrasilis Web Feature Service
+Set of scripts to download Data from TerraBrasilis Web Feature Service
 
 ---
 ### Installation
@@ -54,15 +54,20 @@ Tool created to download any geographic dataset available in TerraBrasilis Web F
 ```
 $ cd teste_imaflora
 $ python run_etl_terrabrasilis.py <"workspace"> <"layer"> <"ano_inicio"> <"ano_fim">
+```
 
 "workspace": workspace name
 "layer": layer name
 "ano_inicio" : filter results greater or equal to a given year
 "ano_fim" : filter results older or equal to a given year
-```
 
 If the code receives a non-existent workspace or workspace/layer, it will return a error message.
 If the dataset has a `year` column, the start and end years area mandatory input as well. Otherwise, it is not required.
+
+In order to run the ETL process, the necessary script is `run_etl_terrabrasilis.py`.
+Script `etl_terrabrasilis_class.py` defines the class and methods to do the ETL and it is mandatory that both of them are in the same folder when running.
+Script `get_available_data.py` is not necessary when running the ETL porcess. It is used to update `wfs_info.json` with the availabe data on TerraBrasilis WFS.
+If you want to update the datasets list, just update variable `directory` on line 12 to the same path where the scripts are located and it should run.
 
 __Example__
 ```

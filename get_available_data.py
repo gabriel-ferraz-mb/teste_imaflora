@@ -9,7 +9,8 @@ import json
 from owslib.wfs import WebFeatureService
 import os
 
-os.chdir(r'C:\Projetos\teste_imaflora')
+directory = r'C:\Projetos\teste_imaflora'
+os.chdir(directory)
 
 # Initialize the root WFS
 wfs_url = "https://terrabrasilis.dpi.inpe.br/geoserver/wfs"
