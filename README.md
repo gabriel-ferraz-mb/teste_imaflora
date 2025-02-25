@@ -1,7 +1,7 @@
 # Gabriel Ferraz - Imaflora
 ---
 
-Script to download EMBARGOS IBAMA from Web Feature Service
+Script to download Data from TerraBrasilis Web Feature Service
 
 ---
 ### Installation
@@ -33,28 +33,39 @@ $ source your_env/bin/activate
 __3. Create `.env` file__
 
 Create a `.env` file at the root of the project following the `.env-sample` variables.
- 
+
+__4. Have `wfs_info` file__
+
+Make sure `wfs_info.json` is in the same folder as the required scripts
 ---
 ### Usage
 ---
 
-#### Download Embargo Ibama
+#### ETL TerraBrasilis Data
 
-Tool created to download Embargos Ibama.
+Tool created to download any geographic dataset available in TerraBrasilis Web Feature Service. To choose and filter the dataset follow these steps:
+
+1. In `wfs_info.json` each element of the JSON is a valid workspace name. Choose any of the available paths.
+2. Inside the chosen workspace path, the available layers within that workspace are listed in "layers".
+   There, it is possible to see the columns structure of each layer. Choose any of the available layers listed bellow the chosen workspace
+3. If the chosen dataset has a `year` column, it is possible to subset da data for desired time frame.
 
 ```
-$ cd test_imaflora
-$ python test_imaflora.py <"ano_inicio"> <"ano_fim"> <"uf">
+$ cd teste_imaflora
+$ python run_etl_terrabrasilis.py <"workspace"> <"layer"> <"ano_inicio"> <"ano_fim">
 
-"ano_inicio" : filter results greater or equal to a year
-"ano_fim" : filter results lesser or equal to a year
-"ano_inicio" : filter results for a determined brazilian state code
+"workspace": workspace name
+"layer": layer name
+"ano_inicio" : filter results greater or equal to a given year
+"ano_fim" : filter results older or equal to a given year
 
-The three variables are mandatory, if any of them is not passed the code will return an error message
+If the code receives a non-existent workspace or workspace/layer, it will return a error message.
+If the dataset has a `year` column, the start and end years area mandatory input as well. Otherwise, it is not required.
+
 ```
 __Example__
 ```
 $ cd test_imaflora
-$ python test_imaflora.py "2019" "2024" "SP"
+$ python run_etl_terrabrasilis.py "prodes-cerrado-nb" "yearly_deforestation" "2021" "2023"
 ```
 ---
