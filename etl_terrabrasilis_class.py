@@ -9,20 +9,13 @@ from owslib.fes import PropertyIsGreaterThanOrEqualTo, PropertyIsLessThanOrEqual
 from owslib.etree import etree
 from owslib.wfs import WebFeatureService
 from psycopg2 import sql
-import psycopg2
 from psycopg2.extensions import cursor as Cursor
 import geopandas as gpd
 import pandas as pd
 from shapely.validation import make_valid
-from dotenv import find_dotenv, load_dotenv
-import os 
-import json
-import sys
 import logging
 import time
-from sqlalchemy import create_engine
 from sqlalchemy import engine
-import datetime
 from typing import Dict, Any, Optional, Union, List
 
 class EtlTerraBrasilis:
@@ -215,68 +208,4 @@ class EtlTerraBrasilis:
         except Exception as e:
             self.logger.error(f'insertData: {e}')
         
-
-# if __name__ == '__main__':
-    
-#     now = datetime.datetime.now().strftime("%I.%M%p_%B_%d_%Y")
-#     logging.basicConfig(
-#         filename=f"etl_terrabrasilis_{now}.log",
-#         filemode='a',
-#         format='%(asctime)s\t%(levelname)s\t%(message)s',
-#         level=logging.INFO
-#     )
-    
-#     t = EtlTerraBrasilis(sys.argv[1], sys.argv[2],
-#                               sys.argv[3], sys.argv[4])
-    
-#     # t = EtlTerraBrasilis("prodes-cerrado-nb", "yearly_deforestation",
-#     #                           "2023", "2025")
-    
-#     logging.info('Initializing process...')
-    
-#     with open("wfs_info.json", "r") as json_file:
-#         wfs_json_data = json.load(json_file)
-    
-#     result = t.checkWsAndLayer(wfs_json_data)
-    
-#     if not result['layer_exists']:
-#         logging.error('Layer does not exist. Exiting script.')
-#         sys.exit('Layer does not exist. Exiting script.')
-#     else:
-#         wfs_url = f"https://terrabrasilis.dpi.inpe.br/geoserver/{sys.argv[1]}/{sys.argv[2]}/wfs"
-#         # wfs_url = "https://terrabrasilis.dpi.inpe.br/geoserver/prodes-cerrado-nb/yearly_deforestation/wfs"
-    
-#     response = t.callWfs(result, wfs_url)
-#     geometry = t.treatGeometry(response)
-    
-#     load_dotenv(find_dotenv('config.env'))
-        
-#     db_params = {
-#         'dbname': os.getenv('DATABASE'),
-#         'user':  os.getenv('USER'),
-#         'password': os.getenv('PASSWORD'),
-#         'host': os.getenv('HOST'),
-#         'port': os.getenv('PORT')
-#     }
-    
-#     # Connect to the PostgreSQL database
-#     conn = psycopg2.connect(**db_params)
-#     cur = conn.cursor()
-#     db_url = f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PASSWORD')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('DATABASE')}"
-
-#     # Create a SQLAlchemy engine
-#     engine = create_engine(db_url)
-    
-#     table_name = f"{sys.argv[1]}_{sys.argv[2]}".replace("-", "_")
-#     # table_name = "prodes-cerrado-nb_yearly_deforestation".replace("-", "_")
-    
-#     t.configPostgres(cur, table_name, geometry)
-#     conn.commit()
-    
-#     t.insertData(geometry, engine, table_name)
-    
-#     # Close the cursor and connection
-#     cur.close()
-#     conn.close()
-#     logging.info("Process Concluded.")
 
