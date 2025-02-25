@@ -25,6 +25,10 @@ if __name__ == '__main__':
     
     # Set up logging
     now = datetime.datetime.now().strftime("%H%M%S-%m.%d.%Y")
+    
+    if not os.path.exists("log"):
+        os.makedirs("log")
+    
     logging.basicConfig(
         filename=f"log//etl_terrabrasilis_{now}.log",
         filemode='a',
