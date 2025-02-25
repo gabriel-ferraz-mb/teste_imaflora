@@ -37,6 +37,7 @@ Create a `.env` file at the root of the project following the `.env-sample` vari
 __4. Have `wfs_info` file__
 
 Make sure `wfs_info.json` is in the same folder as the required scripts
+
 ---
 ### Usage
 ---
@@ -58,11 +59,11 @@ $ python run_etl_terrabrasilis.py <"workspace"> <"layer"> <"ano_inicio"> <"ano_f
 "layer": layer name
 "ano_inicio" : filter results greater or equal to a given year
 "ano_fim" : filter results older or equal to a given year
+```
 
 If the code receives a non-existent workspace or workspace/layer, it will return a error message.
 If the dataset has a `year` column, the start and end years area mandatory input as well. Otherwise, it is not required.
 
-```
 __Example__
 ```
 $ cd test_imaflora
