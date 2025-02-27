@@ -74,4 +74,5 @@ $ cd test_imaflora
 $ python example_wfs_oficial.py "cerrado" "2020-01-01" "2021-01-01>
 ```
 This will retrieve, treat and load into SQL table every deforestation geometry detected for cerrado biome in the year of 2020
+
 ---
