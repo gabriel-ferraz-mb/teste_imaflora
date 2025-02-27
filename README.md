@@ -1,7 +1,7 @@
 # Gabriel Ferraz - Imaflora
 ---
 
-Set of scripts to download Data from TerraBrasilis Web Feature Service
+Set of scripts to download yearly deforestation data from TerraBrasilis Web Feature Service, treat it and insert into SQL database
 
 ---
 ### Installation
@@ -32,11 +32,8 @@ $ source your_env/bin/activate
 
 __3. Create `.env` file__
 
-Create a `.env` file at the root of the project following the `.env-sample` variables.
-
-__4. Have `wfs_info` file__
-
-Make sure `wfs_info.json` is in the same folder as the required scripts
+Create a `config.env` file at the root of the project following the `.env-sample` variables.
+Note that the created file __MUST__ be `config.env`
 
 ---
 ### Usage
@@ -44,35 +41,37 @@ Make sure `wfs_info.json` is in the same folder as the required scripts
 
 #### ETL TerraBrasilis Data
 
-Tool created to download any geographic dataset available in TerraBrasilis Web Feature Service. To choose and filter the dataset follow these steps:
+Tool created to download defeorestation dataset available in TerraBrasilis Web Feature Service. To choose and filter the dataset follow these steps:
 
-1. In `wfs_info.json` each element of the JSON is a valid workspace name. Choose any of the available paths.
-2. Inside the chosen workspace path, the available layers within that workspace are listed in "layers".
-   There, it is possible to see the columns structure of each layer. Choose any of the available layers listed bellow the chosen workspace
-3. If the chosen dataset has a `year` column, it is possible to subset da data for desired time frame.
+1. Choose a brazilian biome name within the list:
+```
+    a) amazon
+    b) mata-atlantica
+    c) cerrado
+    d) pantanal
+    e) pampa
+```   
+Note that the string __MUST__ be written in the exact same way as in this list. This variable is __MANDATORY__, if `None` is passed code will break.
+
+2. Choose a starting date, that __MUST__ be written in format `YYYY-MM-DD`
+3. Choose a end date, that __MUST__ be written in format `YYYY-MM-DD`
+
+Starting date and end date are optional variables, if nothing is passed after biome request will be made for 2000-2024 entire period. 
 
 ```
 $ cd teste_imaflora
-$ python run_etl_terrabrasilis.py <"workspace"> <"layer"> <"ano_inicio"> <"ano_fim">
+$ python example_wfs_oficial.py <"biome"> <"start_date"> <"end_date">
 
-"workspace": workspace name
-"layer": layer name
-"ano_inicio" : filter results greater or equal to a given year
-"ano_fim" : filter results older or equal to a given year
+"biome": biome chosen among the listed above
+"start_date": initial date of filter
+"start_date" : final date of filter
 
 ```
-
-If the code receives a non-existent workspace or workspace/layer, it will return a error message.
-If the dataset has a `year` column, the start and end years area mandatory input as well. Otherwise, it is not required.
-
-In order to run the ETL process, the necessary script is `run_etl_terrabrasilis.py`.
-Script `etl_terrabrasilis_class.py` defines the class and methods to do the ETL and it is mandatory that both of them are in the same folder when running.
-Script `get_available_data.py` is not necessary when running the ETL porcess. It is used to update `wfs_info.json` with the availabe data on TerraBrasilis WFS.
-If you want to update the datasets list, just update variable `directory` on line 12 to the same path where the scripts are located and it should run.
 
 __Example__
 ```
 $ cd test_imaflora
-$ python run_etl_terrabrasilis.py "prodes-cerrado-nb" "yearly_deforestation" "2021" "2023"
+$ python example_wfs_oficial.py "cerrado" "2020-01-01" "2021-01-01>
 ```
+This will retrieve, treat and load into SQL table every deforestation geometry detected for cerrado biome in the year of 2020
 ---
